@@ -4,11 +4,13 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"slices"
 
+	clikit "github.com/dittofleet/go-cli-kit"
+	"github.com/dittofleet/go-cli-kit/selfupdate"
+	"github.com/dittofleet/go-cli-kit/updatecheck"
+	"github.com/dittofleet/navi/internal/app"
 	"github.com/dittofleet/navi/internal/cmd"
 	"github.com/dittofleet/navi/internal/config"
-	"github.com/dittofleet/navi/internal/update"
 )
 
 var errUnknownCommand = errors.New("unknown command")
@@ -56,7 +58,8 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := dispatch(args); err != nil {
+	navi := app.New(version)
+	if err := dispatch(navi, args); err != nil {
 		switch {
 		case errors.Is(err, errUnknownCommand):
 			// Naming it catches the common slip of putting a flag before
@@ -72,23 +75,20 @@ func main() {
 		os.Exit(1)
 	}
 
-	// `update` has just talked to the release API, and `uninstall` has
-	// deleted the cache directory this would recreate.
-	if !slices.Contains([]string{"update", "uninstall"}, args[0]) {
-		update.MaybeCheck(version)
-	}
+	updatecheck.MaybeCheck(navi, args[0])
 }
 
-func dispatch(args []string) error {
+func dispatch(navi clikit.App, args []string) error {
 	switch args[0] {
 	case "send":
 		return cmd.Send(args[1:])
 	case "setup":
 		return cmd.Setup(args[1:])
 	case "update":
-		return cmd.SelfUpdate(version)
+		_, err := selfupdate.Run(navi)
+		return err
 	case "uninstall":
-		return cmd.Uninstall(args[1:], version)
+		return cmd.Uninstall(args[1:], navi)
 	case "version", "--version", "-v":
 		fmt.Println(version)
 		return nil

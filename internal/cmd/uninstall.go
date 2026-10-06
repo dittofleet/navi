@@ -10,8 +10,9 @@ import (
 	"strings"
 	"syscall"
 
+	clikit "github.com/dittofleet/go-cli-kit"
+	"github.com/dittofleet/go-cli-kit/updatecheck"
 	"github.com/dittofleet/navi/internal/config"
-	"github.com/dittofleet/navi/internal/update"
 	"golang.org/x/term"
 )
 
@@ -25,7 +26,7 @@ const uninstallUsage = "usage: navi uninstall [--yes]"
 // and ~/.local/share/navi are also where the unrelated navi cheatsheet
 // tool (github.com/denisidoro/navi) keeps its config and cheatsheets, so
 // a directory is only removed once it is empty.
-func Uninstall(args []string, version string) error {
+func Uninstall(args []string, a clikit.App) error {
 	var yes bool
 	args, err := flags{bools: yesFlag(&yes)}.parse(args, uninstallUsage)
 	if err != nil {
@@ -35,17 +36,17 @@ func Uninstall(args []string, version string) error {
 		return fmt.Errorf("unexpected arguments: %v\n%s", args, uninstallUsage)
 	}
 
-	if version == "dev" {
+	if a.IsDev() {
 		return errors.New("cannot uninstall a dev build")
 	}
 
-	binaryPath, err := resolveExecutable()
+	binaryPath, err := clikit.Executable()
 	if err != nil {
 		return fmt.Errorf("cannot determine binary path: %w", err)
 	}
 
 	configFile := config.Path()
-	cacheFile := update.CachePath()
+	cacheFile := updatecheck.CachePath(a)
 
 	fmt.Println("This will remove:")
 	fmt.Printf("  - Binary:  %s\n", binaryPath)

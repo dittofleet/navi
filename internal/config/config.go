@@ -17,7 +17,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/dittofleet/navi/internal/xdg"
+	"github.com/dittofleet/go-cli-kit/xdg"
+	"github.com/dittofleet/navi/internal/app"
 )
 
 const (
@@ -38,7 +39,7 @@ type Config struct {
 var topicPattern = regexp.MustCompile(`^[-_A-Za-z0-9]{1,64}$`)
 
 func Path() string {
-	return filepath.Join(xdg.ConfigDir(xdg.App), "config.json")
+	return filepath.Join(xdg.ConfigDir(app.Name), "config.json")
 }
 
 // ErrNotConfigured is returned by Load when neither the file nor the
