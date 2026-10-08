@@ -71,6 +71,6 @@ bunx skills add https://github.com/dittofleet/navi
 
 ## Updating and uninstalling
 
-`navi update` installs the latest release. Once a day, navi prints a hint when one is out. It skips the check when `CI` or `NAVI_NO_UPDATE_CHECK` is set or stderr is not a terminal.
+navi updates itself: at most once a day, after a command, it installs a newer release if one is out. It skips the check when `CI` or `NAVI_NO_UPDATE_CHECK` is set or stderr is not a terminal. `navi update` does the same right away.
 
 `navi uninstall` removes the binary, the config and the update cache, after asking (`--yes` skips the prompt). Your topic and the phone's subscription are untouched.
