@@ -89,6 +89,8 @@ func dispatch(navi clikit.App, args []string) error {
 		return err
 	case "uninstall":
 		return cmd.Uninstall(args[1:], navi)
+	case "postinstall":
+		return cmd.Postinstall(navi)
 	case "version", "--version", "-v":
 		fmt.Println(version)
 		return nil

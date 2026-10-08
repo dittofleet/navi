@@ -21,7 +21,7 @@ Tests pass, PR #42 is open
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dittofleet/navi/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | sh -s navi
 navi setup
 ```
 
@@ -32,7 +32,7 @@ The installer puts the latest release in `~/.local/bin/navi` (override with `NAV
 To set up another machine with the same topic in one line (the variable goes after the pipe, so it reaches the shell running the script):
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dittofleet/navi/main/install.sh | NAVI_TOPIC=<your topic> sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | NAVI_TOPIC=<your topic> sh -s navi
 ```
 
 Or sync `~/.config/navi/config.json` with [lichen](https://github.com/dittofleet/lichen).
