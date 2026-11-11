@@ -140,6 +140,8 @@ func (c *Config) Validate() error {
 
 // Save validates the config and writes it owner-only, since the topic is
 // as good as a password on a public server and the token is one outright.
+// On Windows the mode means nothing, and the user's own folder keeps others
+// out instead.
 // It goes through a temp file so an interrupted write cannot leave half a
 // config.
 func (c *Config) Save() error {

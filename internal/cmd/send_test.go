@@ -27,6 +27,7 @@ func TestRepoName(t *testing.T) {
 		"https://github.com/dittofleet/lichen":       "lichen",
 		"git@github.com:dittofleet/port-pool.git":    "port-pool",
 		"ssh://git@host:22/owner/repo/":              "repo",
+		`C:\src\lichen.git\`:                         "lichen",
 	} {
 		if got := repoName(in); got != want {
 			t.Errorf("repoName(%q) = %q, want %q", in, got, want)

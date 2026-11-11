@@ -25,7 +25,14 @@ curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh 
 navi setup
 ```
 
-The installer puts the latest release in `~/.local/bin/navi` (override with `NAVI_INSTALL_DIR`). Supported platforms: macOS and Linux, arm64 and x64.
+On Windows, in PowerShell:
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dittofleet/.github/main/install.ps1))) navi
+navi setup
+```
+
+The installer puts the latest release in `~/.local/bin/navi` (override with `NAVI_INSTALL_DIR`). On Windows, `~` here and below is your user profile folder, and the install location is added to your `PATH`. Supported platforms: macOS and Linux (arm64 and x64), Windows (x64).
 
 `navi setup` generates a random topic and shows how to subscribe to it in the ntfy app (iOS or Android). The public server at ntfy.sh needs no account. Anyone who knows the topic can read it, so keep it to yourself. Run `navi setup` again to see it, or `navi setup --rotate` to replace it if it leaks.
 
@@ -33,6 +40,12 @@ To set up another machine with the same topic in one line (the variable goes aft
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | NAVI_TOPIC=<your topic> sh -s navi
+```
+
+On Windows, in PowerShell:
+
+```powershell
+$env:NAVI_TOPIC = '<your topic>'; & ([scriptblock]::Create((irm https://raw.githubusercontent.com/dittofleet/.github/main/install.ps1))) navi
 ```
 
 Or sync `~/.config/navi/config.json` with [lichen](https://github.com/dittofleet/lichen).

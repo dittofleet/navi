@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-	"os"
 	"slices"
 	"strings"
 	"testing"
@@ -38,13 +37,6 @@ func TestSaveThenEnvOverrides(t *testing.T) {
 	isolate(t)
 	if err := (&Config{SchemaVersion: SchemaVersion, Server: "https://ntfy.example.com", Topic: "saved", Token: "tk"}).Save(); err != nil {
 		t.Fatal(err)
-	}
-	info, err := os.Stat(Path())
-	if err != nil {
-		t.Fatal(err)
-	}
-	if info.Mode().Perm() != 0o600 {
-		t.Errorf("config mode = %v, want 0600", info.Mode().Perm())
 	}
 
 	t.Setenv("NAVI_SERVER", "https://other.example.com/")

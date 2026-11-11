@@ -24,4 +24,4 @@ The title defaults to `<repo> on <machine>`. Replace it with `-t "<title>"` only
 
 ## If it fails
 
-`command not found`, `no topic configured`, an HTTP error, or output about cheatsheets (a different `navi` is first on `PATH`): tell the user. Do not install navi, run `navi setup`, or read its config: the topic in it works like a password.
+`command not found` or `not recognized`, `no topic configured`, an HTTP error, or output about cheatsheets (a different `navi` is first on `PATH`): tell the user. Do not install navi, run `navi setup`, or read its config: the topic in it works like a password.

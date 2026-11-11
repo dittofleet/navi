@@ -127,8 +127,8 @@ func projectName() string {
 // https://host/owner/repo.git and git@host:owner/repo end in it, after the
 // last separator.
 func repoName(remote string) string {
-	remote = strings.TrimSuffix(strings.TrimRight(strings.TrimSpace(remote), "/"), ".git")
-	if i := strings.LastIndexAny(remote, "/:"); i >= 0 {
+	remote = strings.TrimSuffix(strings.TrimRight(strings.TrimSpace(remote), `/\`), ".git")
+	if i := strings.LastIndexAny(remote, `/:\`); i >= 0 {
 		remote = remote[i+1:]
 	}
 	return remote
